@@ -44,8 +44,9 @@ typedef struct {
     rgb_pixel_t** data;
     uint32_t width;
     uint32_t height;
-} image_t;
+} rgbimage_t;
 
-image_t* read_file(const char* file_name);
+rgbimage_t* read_bitmap(const char* file_name);
+void free_rgb_image(rgbimage_t* image);
 
 #endif /* BITMAPS_H */

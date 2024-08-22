@@ -3,11 +3,11 @@
 
 #include "bitmaps.h"
 
-image_t*
-read_file(const char* file_name) {
+rgbimage_t*
+read_bitmap(const char* file_name) {
     bmp_fileheader_t fileheader;
     bmp_infoheader_t infoheader;
-    image_t* image;
+    rgbimage_t* image;
     FILE* file;
 
     file = fopen(file_name, "rb");
@@ -60,7 +60,7 @@ read_file(const char* file_name) {
     }
 
     /* Allocate memory for 2d array with image data */
-    image = malloc(sizeof(image_t));
+    image = malloc(sizeof(rgbimage_t));
     if (image == NULL) {
         printf("Memory allocation failed");
         fclose(file);
@@ -109,4 +109,12 @@ read_file(const char* file_name) {
     fclose(file);
     printf("\nFile closed");
     return image;
+}
+
+void
+free_rgb_image(rgbimage_t* image) {
+    for (int i = 0; i < image->width; ++i) {
+        free(image->data[i]);
+    }
+    free(image->data);
 }
