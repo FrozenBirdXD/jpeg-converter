@@ -5,7 +5,7 @@
 
 int
 main(int argc, char const* argv[]) {
-    image_t* image = read_file("../test-image.bmp");
+    rgbimage_t* image = read_file("../test-image.bmp");
 
     for (int i = 0; i < image->width; ++i) {
         free(image->data[i]);
