@@ -40,6 +40,12 @@ typedef struct {
 
 #pragma pack(pop)
 
-void read_file(const char* file_name);
+typedef struct {
+    rgb_pixel_t** data;
+    uint32_t width;
+    uint32_t height;
+} image_t;
+
+image_t* read_file(const char* file_name);
 
 #endif /* BITMAPS_H */
