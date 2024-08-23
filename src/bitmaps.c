@@ -113,8 +113,12 @@ read_bitmap(const char* file_name) {
 
 void
 free_rgb_image(rgbimage_t* image) {
+    if (image == NULL) {
+        return;
+    }
     for (int i = 0; i < image->width; ++i) {
         free(image->data[i]);
     }
     free(image->data);
+    free(image);
 }

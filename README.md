@@ -5,3 +5,4 @@ This project is an implementation of JPEG image compression written in C, withou
 ## Finished Steps
 
 - **Bitmap Input Image**: Reads the pixel data from a 24-bit BMP image
+- **Color Space Transfromation**: Converts the RGB image data to YCbCr
