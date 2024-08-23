@@ -17,5 +17,6 @@ typedef struct {
 } ycbcr_image_t;
 
 ycbcr_image_t* color_space_transform(const rgbimage_t* rgb_image);
+void free_ycbcr_image(ycbcr_image_t* ycbcr_image);
 
 #endif /* COLOR_SPACE_TRANSFORM_H */
