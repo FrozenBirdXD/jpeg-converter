@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "bitmaps.h"
 #include "color_space_transform.h"
@@ -41,13 +41,19 @@ color_space_transform(const rgbimage_t* rgb_image) {
             uint8_t r = rgb_image->data[i][j].r;
             uint8_t g = rgb_image->data[i][j].g;
             uint8_t b = rgb_image->data[i][j].b;
-            /* Convert rgb to ycbcr */
-            ycbcr_image->data[i][j].y = 16 + (((r << 6) + (r << 1) + (g << 7) + g + (b << 4) + (b << 3) + b) >> 8);
-            ycbcr_image->data[i][j].cb =
-                128
-                + ((-((r << 5) + (r << 2) + (r << 1)) - ((g << 6) + (g << 3) + (g << 1)) + (b << 7) - (b << 4)) >> 8);
-            ycbcr_image->data[i][j].cr =
-                128 + (((r << 7) - (r << 4) - ((g << 6) + (g << 5) - (g << 1)) - ((b << 4) + (b << 1))) >> 8);
+            /* Convert rgb to ycbcr - studio range (16 - 235)*/
+            /*
+             *ycbcr_image->data[i][j].y = 16 + (((r << 6) + (r << 1) + (g << 7) + g + (b << 4) + (b << 3) + b) >> 8);
+             *ycbcr_image->data[i][j].cb =
+             *    1 + ((-((r << 5) + (r << 2) + (r << 1)) - ((g << 6) + (g << 3) + (g << 1)) + (b << 7) - (b << 4)) >> 8);
+             *ycbcr_image->data[i][j].cr =
+             *    128 + (((r << 7) - (r << 4) - ((g << 6) + (g << 5) - (g << 1)) - ((b << 4) + (b << 1))) >> 8);
+             */
+
+            /* According JIFI specs: range 0 - 255 */
+            ycbcr_image->data[i][j].y = 0 + (0.299 * r) + (0.587 * g) + (0.114 * b);
+            ycbcr_image->data[i][j].cb = 128 - (0.168736 * r) - (0.331264 * g) + (0.5 * b);
+            ycbcr_image->data[i][j].cr = 128 + (0.5 * r) - (0.418688 * g) - (0.081312 * b);
         }
     }
     return ycbcr_image;
